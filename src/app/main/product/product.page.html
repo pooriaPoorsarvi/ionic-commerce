@@ -5,6 +5,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-no-padding">
+
+  <ion-img [src]="'https://worldstrides.com/wp-content/uploads/2015/07/iStock_000040849990_Large.jpg'"></ion-img>
+  <ion-grid class="ion-padding">
+    <ion-row>
+      <ion-col size="8" offset="2">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="3" size="3">
+        <ion-button [color]='"danger"'>
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="3">
+        <ion-button [color]='"success"'>
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
