@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cart.page.scss'],
 })
 export class CartPage implements OnInit {
+  items = [1, 2, 3, 4, 5];
 
   constructor() { }
 
