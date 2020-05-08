@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
-import { setInterval } from 'timers';
+import { IonSlides, NavController } from '@ionic/angular';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-discover',
@@ -8,6 +8,7 @@ import { setInterval } from 'timers';
   styleUrls: ['./discover.page.scss'],
 })
 export class DiscoverPage implements OnInit {
+  items = [1, 2, 3, 4, 5];
 
   @ViewChild(IonSlides, {static: true}) ionSlides: IonSlides;
   goingForward = true;
@@ -24,11 +25,11 @@ export class DiscoverPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    setInterval(
+    const sub =interval(1000);
+    sub.subscribe(
       () => {
         this.moveSlide();
-      }
-      , this.slideLoopTime);
+      });
     this.ionSlides.ionSlideReachEnd.subscribe(
       () => {
         this.endThatHasBeenReached = 1;
@@ -56,7 +57,5 @@ export class DiscoverPage implements OnInit {
     } else {
       this.ionSlides.slidePrev();
     }
-
   }
-
 }

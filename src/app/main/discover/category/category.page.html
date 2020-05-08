@@ -1,31 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-menu-button slot="start"></ion-menu-button>
-    <ion-title>discover</ion-title>
-    <ion-buttons slot="end">
-      <ion-button [routerLink]="['/', 'main', 'tabs', 'discover', 'search']">
-        <ion-icon name="search"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-back-button [defaultHref] = "['/', 'main', 'tabs', 'discover']"  slot="start"></ion-back-button>
+    <ion-title>category</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-no-padding">
-
-  <ion-slides pager="true" [options]="slideOpts" [pager]='false' >
-    <ion-slide>
-      <ion-img [src]="'https://www.aioma.com/hubfs/e-commerce-2.jpg'"></ion-img>
-    </ion-slide>
-    <ion-slide>
-      <ion-img [src]="'https://r2slogistics.com/wp-content/uploads/2019/07/post1.jpeg'"></ion-img>
-    </ion-slide>
-    <ion-slide>
-      <ion-img [src]="'https://staticeurobiz.europeanchamber.com.cn/wp-content/uploads/2019/02/China%E2%80%99s-New-E-commerce-Law-Good-or-Bad-News-for-Business-01.png'"></ion-img>
-    </ion-slide>
-  </ion-slides>
-
-
-  <ion-grid class="ion-padding">
+<ion-content>
+<ion-grid class="ion-padding">
     
     
     <ion-row>
@@ -63,5 +44,4 @@
     </ion-row>
 
   </ion-grid>
-
 </ion-content>

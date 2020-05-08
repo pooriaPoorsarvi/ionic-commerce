@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" [defaultHref] = "['/', 'main', 'tabs', 'discover']"></ion-back-button>
+    <ion-title>search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor ='let item of items' detail [routerLink] = "['/', 'main', 'tabs', 'discover', 'product']">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="'https://worldstrides.com/wp-content/uploads/2015/07/iStock_000040849990_Large.jpg'"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h1>Title</h1>
+        <p>somethign</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

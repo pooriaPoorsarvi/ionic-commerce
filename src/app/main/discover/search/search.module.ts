@@ -17,4 +17,5 @@ import { SearchPage } from './search.page';
   ],
   declarations: [SearchPage]
 })
-export class SearchPageModule {}
+export class SearchPageModule {
+}
