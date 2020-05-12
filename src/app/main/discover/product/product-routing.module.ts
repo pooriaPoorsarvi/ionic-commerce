@@ -5,8 +5,12 @@ import { ProductPage } from './product.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':pID',
     component: ProductPage
+  },
+  {
+    path: '**',
+    redirectTo : '1'
   }
 ];
 

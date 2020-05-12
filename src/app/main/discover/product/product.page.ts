@@ -1,5 +1,8 @@
+import { ProductService } from './product.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import {ProductInterface} from './product.service';
 
 @Component({
   selector: 'app-product',
@@ -8,9 +11,34 @@ import { NavController } from '@ionic/angular';
 })
 export class ProductPage implements OnInit {
 
-  constructor(private navCntrl: NavController) { }
+  id: string;
+  product: ProductInterface;
 
-  ngOnInit() {
+  constructor(private navCntrl: NavController, private activatedRoute: ActivatedRoute, public productService: ProductService) { }
+  goBack() {
+    this.navCntrl.navigateBack(['/']);
   }
+  ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(
+      (paramMap: ParamMap) => {
+        if (paramMap.has('pID')) {
+          this.id = paramMap.get('pID');
+          this.productService.getProduct(this.id).subscribe(
+            (product: ProductInterface) => {
+              this.product = product;
+            }
+            , err => {
+              console.log('error occured while getting the product');
+              console.log(err);
+            }
+          );
+        } else {
+          this.goBack();
+        }
+      }
+    );
+  }
+
+
 
 }
