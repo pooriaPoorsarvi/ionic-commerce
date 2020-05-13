@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content>
-<ion-grid class="ion-padding">
+<ion-grid class="ion-padding" *ngIf= "productItems">
     
     
     <ion-row>
@@ -14,7 +14,7 @@
       <ion-col
       size="12"
       size-md="6" 
-      *ngFor = "let item of items"
+      *ngFor = "let product of productItems"
       >
         <ion-card class="ion-text-center">
           
@@ -23,15 +23,15 @@
             <ion-card-subtitle>{{'420' | currency}}</ion-card-subtitle>
           </ion-card-header>
 
-          <ion-img [src] = "'https://worldstrides.com/wp-content/uploads/2015/07/iStock_000040849990_Large.jpg'"></ion-img>
+          <ion-img [src] = "product.imageSrc"></ion-img>
           <ion-card-content  class="ion-margin-top ion-no-padding">
-            <p>{{'Some description'}}</p>
+            <p>{{product.description}}</p>
 
             <ion-button fill="clear"
               color="primary" 
               class="ion-no-margin"
               style="margin-top: 4px; margin-bottom:2px"
-              [routerLink] = "['/', 'main', 'tabs', 'discover', 'product']"
+              [routerLink] = "['/', 'main', 'tabs', 'discover', 'product', product.id]"
               >
               More
             </ion-button>

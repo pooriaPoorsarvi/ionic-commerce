@@ -5,8 +5,12 @@ import { CategoryPage } from './category.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':pID',
     component: CategoryPage
+  },
+  {
+    path: '**',
+    redirectTo: '1'
   }
 ];
 

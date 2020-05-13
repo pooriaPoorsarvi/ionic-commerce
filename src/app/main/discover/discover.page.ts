@@ -32,8 +32,6 @@ export class DiscoverPage implements OnInit {
     this.discoverService.discover().subscribe(
       (discovered: ProductInterface[]) => {
         this.discoveryProducts = discovered;
-        console.log('got here');
-        console.log(this.discoveryProducts);
       }
     );
   }

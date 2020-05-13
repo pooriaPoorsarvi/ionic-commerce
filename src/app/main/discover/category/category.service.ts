@@ -6,8 +6,9 @@ import { timer, Subject } from 'rxjs';
 import { ProductInterface } from './../product/product.service';
 
 export interface CategoryInterface {
-    name: string;
-    imgSrc: string;
+  id: number;
+  name: string;
+  imgSrc: string;
 }
 
 
@@ -21,11 +22,11 @@ export class CategoryService {
   getAllCategories(): Subject<CategoryInterface[]> {
     return this.requestSenderService.makeRequest(
       () => {
-        return this.httpClient.get(environment.apiUrl + '/products/discover');
+        return this.httpClient.get(environment.apiUrl + '/categories');
       },
       (res) => {},
       (err) => {
-        console.log('Loading discovery product from server had an error');
+        console.log('Loading categories from server had an error');
         console.log(err);
       },
       5000,
@@ -33,6 +34,23 @@ export class CategoryService {
       CategoryService.name + this.getAllCategories.name,
       false,
     ) as Subject<CategoryInterface[]>;
+  }
+
+
+  getAllProductsForCategory(ID: string): Subject<ProductInterface[]> {
+    return this.requestSenderService.makeRequest(
+      () => {
+        return this.httpClient.get(environment.apiUrl + '/categories/' + ID + '/products');
+      },
+      (res) => {},
+      (err) => {
+        console.log('Loading category products from server had an error');
+        console.log(err);
+      },
+      5000,
+      'Loading category products from server.',
+      CategoryService.name + this.getAllProductsForCategory.name,
+    ) as Subject<ProductInterface[]>;
   }
 
 }

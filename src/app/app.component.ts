@@ -1,3 +1,4 @@
+import { CategoryService, CategoryInterface } from './main/discover/category/category.service';
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
@@ -10,10 +11,14 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+
+  categories: CategoryInterface[];
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private categoryService: CategoryService
   ) {
     this.initializeApp();
   }
@@ -23,5 +28,10 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+    this.categoryService.getAllCategories().subscribe(
+      (categories: CategoryInterface[]) => {
+        this.categories = categories;
+      }
+    );
   }
 }
