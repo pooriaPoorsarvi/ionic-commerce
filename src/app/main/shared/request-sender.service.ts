@@ -24,7 +24,8 @@ export class RequestSenderService {
         pausePage: boolean = true,
         maxTry: number = 100,
     ): Observable<any> {
-        timeToWaitToResent = Math.max(this.maxWaitTime, timeToWaitToResent);
+        timeToWaitToResent = Math.min(this.maxWaitTime, timeToWaitToResent);
+        console.log(timeToWaitToResent);
         const res = new Subject<any>();
         this.loadCntrl.create({
             id,
