@@ -7,6 +7,8 @@ import { LoadingController } from '@ionic/angular';
 })
 export class RequestSenderService {
 
+    maxWaitTime = 2000;
+
     constructor(private loadCntrl: LoadingController) {}
 
 
@@ -22,6 +24,7 @@ export class RequestSenderService {
         pausePage: boolean = true,
         maxTry: number = 100,
     ): Observable<any> {
+        timeToWaitToResent = Math.max(this.maxWaitTime, timeToWaitToResent);
         const res = new Subject<any>();
         this.loadCntrl.create({
             id,
