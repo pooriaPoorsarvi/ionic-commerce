@@ -31,7 +31,7 @@ export class CategoryService {
       5000,
       'Loading categories from server.',
       CategoryService.name + this.getAllCategories.name,
-      true 
+      false,
     ) as Subject<CategoryInterface[]>;
   }
 

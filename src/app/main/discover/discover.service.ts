@@ -25,7 +25,6 @@ export class DiscoverService {
       5000,
       'Loading discovery product from server.',
       DiscoverService.name + this.discover.name,
-      false
     ) as Subject<ProductInterface[]>;
   }
 
