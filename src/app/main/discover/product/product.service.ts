@@ -30,7 +30,7 @@ export class ProductService {
         console.log(err);
       },
       5000,
-      'Loading product from server',
+      'Loading product from server.',
       ProductService.name + this.getProduct.name,
     ) as Subject<ProductInterface>;
   }

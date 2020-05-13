@@ -1,6 +1,8 @@
+import { DiscoverService } from './discover.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides, NavController } from '@ionic/angular';
 import { interval } from 'rxjs';
+import { ProductInterface } from './product/product.service';
 
 @Component({
   selector: 'app-discover',
@@ -9,6 +11,8 @@ import { interval } from 'rxjs';
 })
 export class DiscoverPage implements OnInit {
   items = [1, 2, 3, 4, 5];
+
+  discoveryProducts: ProductInterface[];
 
   @ViewChild(IonSlides, {static: true}) ionSlides: IonSlides;
   goingForward = true;
@@ -22,9 +26,20 @@ export class DiscoverPage implements OnInit {
     autoHeight: true
   };
 
-  constructor() { }
+  constructor(private discoverService: DiscoverService) { }
+
+  setUpDiscoveryProducts(){
+    this.discoverService.discover().subscribe(
+      (discovered: ProductInterface[]) => {
+        this.discoveryProducts = discovered;
+        console.log('got here');
+        console.log(this.discoveryProducts);
+      }
+    );
+  }
 
   ngOnInit() {
+    this.setUpDiscoveryProducts();
     const sub =interval(1000);
     sub.subscribe(
       () => {

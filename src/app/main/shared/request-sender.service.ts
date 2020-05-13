@@ -28,24 +28,37 @@ export class RequestSenderService {
         }).then(
             (loadingEl: HTMLIonLoadingElement) => {
                 loadingEl.present();
+                // The request should be send after the overlay is shown or we might miss closing it
+                this.sendingTheRequest(requestSubject, successCallBack, errCallBack, timeToWaitToResent, id, res);
             }
         );
+        return res;
+    }
+
+    private sendingTheRequest(
+        requestSubject: () => Observable<any>,
+        successCallBack: (requestResult: any) => void,
+        errCallBack: (err: any) => void,
+        timeToWaitToResent: number,
+        id: string,
+        res: Subject<any>
+    ) {
         const reqRepeat = timer(0, timeToWaitToResent).subscribe(
-        () => {
-            const request = requestSubject().subscribe(
-            (requestResult: any) => {
-                res.next(requestResult);
-                successCallBack(requestResult);
-                request.unsubscribe();
-                reqRepeat.unsubscribe();
-                this.loadCntrl.dismiss(null, null, id);
-            },
-            err => {
-                errCallBack(err);
+            () => {
+                const request = requestSubject().subscribe(
+                (requestResult: any) => {
+                    res.next(requestResult);
+                    successCallBack(requestResult);
+                    request.unsubscribe();
+                    reqRepeat.unsubscribe();
+                    this.loadCntrl.dismiss(null, null, id);
+                },
+                err => {
+                    errCallBack(err);
+                }
+                );
             }
             );
-        }
-        );
         return res;
     }
 
