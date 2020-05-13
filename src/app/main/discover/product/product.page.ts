@@ -27,10 +27,6 @@ export class ProductPage implements OnInit {
             (product: ProductInterface) => {
               this.product = product;
             }
-            , err => {
-              console.log('error occured while getting the product');
-              console.log(err);
-            }
           );
         } else {
           this.goBack();
