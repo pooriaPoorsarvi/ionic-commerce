@@ -1,18 +1,24 @@
-import { RequestSenderService } from './../shared/request-sender.service';
-import { environment } from './../../../environments/environment.prod';
+import { RequestSenderService } from './../../shared/request-sender.service';
+import { environment } from './../../../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { timer, Subject } from 'rxjs';
-import { ProductInterface } from './product/product.service';
+import { ProductInterface } from './../product/product.service';
+
+export interface CategoryInterface {
+    name: string;
+    imgSrc: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class DiscoverService {
+export class CategoryService {
   constructor(private httpClient: HttpClient, private requestSenderService: RequestSenderService) { }
 
 
-  discover(): Subject<ProductInterface[]> {
+  getAllCategories(): Subject<CategoryInterface[]> {
     return this.requestSenderService.makeRequest(
       () => {
         return this.httpClient.get(environment.apiUrl + '/products/discover');
@@ -23,10 +29,10 @@ export class DiscoverService {
         console.log(err);
       },
       5000,
-      'Loading discovery product from server.',
-      DiscoverService.name + this.discover.name,
-      false
-    ) as Subject<ProductInterface[]>;
+      'Loading categories from server.',
+      CategoryService.name + this.getAllCategories.name,
+      true 
+    ) as Subject<CategoryInterface[]>;
   }
 
 }

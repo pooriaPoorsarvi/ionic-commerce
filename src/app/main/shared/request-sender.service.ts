@@ -18,7 +18,8 @@ export class RequestSenderService {
         errCallBack: (err: any) => void,
         timeToWaitToResent: number,
         messageOnLoader: string,
-        id: string
+        id: string,
+        pausePage: boolean = true
     ): Observable<any> {
         const res = new Subject<any>();
         this.loadCntrl.create({
@@ -27,9 +28,11 @@ export class RequestSenderService {
             message: messageOnLoader
         }).then(
             (loadingEl: HTMLIonLoadingElement) => {
-                loadingEl.present();
+                if (pausePage) {
+                    loadingEl.present();
+                }
                 // The request should be send after the overlay is shown or we might miss closing it
-                this.sendingTheRequest(requestSubject, successCallBack, errCallBack, timeToWaitToResent, id, res);
+                this.sendingTheRequest(requestSubject, successCallBack, errCallBack, timeToWaitToResent, id, res, pausePage);
             }
         );
         return res;
@@ -41,7 +44,8 @@ export class RequestSenderService {
         errCallBack: (err: any) => void,
         timeToWaitToResent: number,
         id: string,
-        res: Subject<any>
+        res: Subject<any>,
+        pausePage: boolean
     ) {
         const reqRepeat = timer(0, timeToWaitToResent).subscribe(
             () => {
@@ -51,7 +55,9 @@ export class RequestSenderService {
                     successCallBack(requestResult);
                     request.unsubscribe();
                     reqRepeat.unsubscribe();
-                    this.loadCntrl.dismiss(null, null, id);
+                    if (pausePage) {
+                        this.loadCntrl.dismiss(null, null, id);
+                    }
                 },
                 err => {
                     errCallBack(err);
