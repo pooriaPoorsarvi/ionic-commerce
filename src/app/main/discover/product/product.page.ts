@@ -22,12 +22,14 @@ export class ProductPage implements OnInit {
     this.activatedRoute.paramMap.subscribe(
       (paramMap: ParamMap) => {
         if (paramMap.has('pID')) {
-          this.id = paramMap.get('pID');
-          this.productService.getProduct(this.id).subscribe(
-            (product: ProductInterface) => {
-              this.product = product;
-            }
-          );
+          if (this.id !== paramMap.get('pID')) {
+            this.id = paramMap.get('pID');
+            this.productService.getProduct(this.id).subscribe(
+              (product: ProductInterface) => {
+                this.product = product;
+              }
+            );
+          }
         } else {
           this.goBack();
         }
