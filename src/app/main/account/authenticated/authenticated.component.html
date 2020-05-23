@@ -59,8 +59,16 @@
 
 <ion-grid>
   <ion-row>
-    <ion-col offset = "3" size = "6">
+    <ion-col offset-lg = "3" size-lg = "6" offset-md = "2" size-md = "8" offset = "1" size = "10">
       <ion-button style="width: 100%;" color="secondary">Save Edits</ion-button>
     </ion-col>
   </ion-row>
+
+  
+  <ion-row class="ion-padding-top">
+    <ion-col offset-lg = "3" size-lg = "6" offset-md = "2" size-md = "8" offset = "1" size = "10">
+      <ion-button style="width: 100%;" color="danger" (click) = 'logout()'>logout</ion-button>
+    </ion-col>
+  </ion-row>
+
 </ion-grid>

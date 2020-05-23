@@ -12,9 +12,16 @@ export class AuthenticationModel {
         this.updateJWT(jwt);
     }
 
+    // TODO add documentation
     public updateJWT(jwt: string){
+        if (jwt === 'undefined' || jwt === null) {
+            return;
+        }
         const tokenInfo = this.helper.decodeToken(jwt);
-        if (jwt === 'undefined' || jwt === null || tokenInfo === null || jwt === '') {
+        if (jwt === '' || tokenInfo === null) {
+            this.jwt = jwt;
+            this.hasBeenExpired = true;
+            this.email = '';
             return;
         }
         this.jwt = jwt;

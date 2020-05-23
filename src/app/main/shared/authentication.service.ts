@@ -81,5 +81,11 @@ export class AuthenticationService {
         return this.authenticationModel;
     }
 
+    public logout(){
+        Storage.clear();
+        this.authenticationModel.updateJWT('');
+        console.log(this.authenticationModel.isExpired());
+    }
+
 
 }
