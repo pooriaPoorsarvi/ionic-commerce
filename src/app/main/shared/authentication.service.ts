@@ -26,14 +26,14 @@ interface JWTResponse {
 export class AuthenticationService {
 
     private saveKey = 'jwt';
-    private authenticationModel: AuthenticationModel;
+    private authenticationModel: AuthenticationModel = new AuthenticationModel();
 
     constructor(private httpClient: HttpClient, private requestSenderService: RequestSenderService) {
         this.loadJWT();
     }
 
 
-    public authenticateFromServer(authenticationInfo: AuthenticationInfo) {
+    private authenticateFromServerWithSubject(authenticationInfo: AuthenticationInfo) {
         const subs =  this.requestSenderService.makeRequest(
             () => {
                 return this.httpClient.post(environment.apiUrl + '/authenticate/', authenticationInfo);
@@ -53,6 +53,12 @@ export class AuthenticationService {
                 this.saveJWT(jwt.jwt);
             }
         );
+        return subs;
+    }
+
+    public async authenticateFromServer(authenticationInfo: AuthenticationInfo) {
+        const s = this.authenticateFromServerWithSubject(authenticationInfo);
+        await Promise.resolve(s.toPromise);
     }
 
 
@@ -65,7 +71,16 @@ export class AuthenticationService {
 
     private async loadJWT() {
         const jwtMap = await Storage.get({ key: this.saveKey });
-        this.authenticationModel = new AuthenticationModel(jwtMap.value);
+        const authenticationModel = new AuthenticationModel(jwtMap.value);
+        if (! authenticationModel.isExpired) {
+            this.authenticationModel = authenticationModel;
+        } else {
+            Storage.clear();
+        }
+    }
+
+    public getAuthenticationModel(): AuthenticationModel{
+        return { ...this.authenticationModel } as AuthenticationModel;
     }
 
 

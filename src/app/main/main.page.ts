@@ -13,7 +13,9 @@ export class MainPage implements OnInit {
   constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-    this.authenticationService.authenticateFromServer({email: 'p@gam.c', password: 'password'});
+    if (this.authenticationService.getAuthenticationModel().isExpired) {
+      this.authenticationService.authenticateFromServer({email: 'p@gam.c', password: 'password'});
+    }
   }
 
 }
