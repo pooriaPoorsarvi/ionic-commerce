@@ -10,7 +10,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class LoginComponent implements OnInit {
 
-  signUpForm = new FormGroup({
+  loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.min(1)]),
   });
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-    this.authenticationService.authenticateFromServer(this.signUpForm.value, this.presentAlert.bind(this));
+    this.authenticationService.authenticateFromServer(this.loginForm.value, this.presentAlert.bind(this));
   }
 
   async presentAlert() {
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       message: 'Either the user name or the password was wrong',
       buttons: ['OK']
     });
-    this.signUpForm.reset();
+    this.loginForm.reset();
     await alert.present();
   }
 

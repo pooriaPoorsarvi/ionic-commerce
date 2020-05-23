@@ -1,3 +1,4 @@
+<form [formGroup]="signUpForm">
 <ion-grid style="width: 100%;">
 
   <ion-row>
@@ -16,17 +17,17 @@
 
         <ion-item>
           <ion-label position="floating">New Email <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text"></ion-input>
+          <ion-input formControlName="email" required type="text"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="floating">Password<ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text"></ion-input>
+          <ion-input formControlName="password" type="password"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="floating">Repeat Password<ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text"></ion-input>
+          <ion-input formControlName="repeatedPassword" type="password"></ion-input>
         </ion-item>
 
       </ion-list>
@@ -37,8 +38,9 @@
 
   <ion-row>
     <ion-col size-lg="400" offset-lg="400" size-mg="500" offset-mg="350" size-sm="700" offset-sm="250" size="1000" offset="100"> 
-      <ion-button class="fw" color='secondary'>Sign me up</ion-button>
+      <ion-button class="fw" color='secondary' [disabled] = '!signUpForm.valid' (click)="signUp()">Sign me up</ion-button>
     </ion-col>
   </ion-row>
 
 </ion-grid>
+</form>

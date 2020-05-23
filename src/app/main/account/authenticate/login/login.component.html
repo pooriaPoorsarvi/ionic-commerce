@@ -1,4 +1,4 @@
-<form [formGroup]='signUpForm'>
+<form [formGroup]='loginForm'>
 <ion-grid style="width: 100%;">
 
   <ion-row>
@@ -37,7 +37,7 @@
     </ion-col>
 
     <ion-col size-xl="200" offset-xl="50"  size-md="300" offset-md="60" size-sm="350" offset-sm="70" size="400" offset="80"> 
-      <ion-button class="fw" color='secondary' [disabled]='!signUpForm.valid' (click)='login()'>Login</ion-button>
+      <ion-button class="fw" color='secondary' [disabled]='!loginForm.valid' (click)='login()'>Login</ion-button>
     </ion-col>
 
   </ion-row>
