@@ -5,7 +5,7 @@
     <ion-row class="ion-margin-vertical">
 
       <ion-col size-lg="6" offset-lg="3" size-md="8" offset-md="2" size="10" offset="1">
-        <ion-segment color='secondary' (ionChange)= 'segmentChange($event)' [value]='login'>
+        <ion-segment color='secondary' (ionChange)= 'segmentChange($event)' [(value)]='segment'>
           <ion-segment-button [value]="login">Login</ion-segment-button>
           <ion-segment-button [value]= "signUp">Sign up</ion-segment-button>
         </ion-segment>
@@ -19,8 +19,15 @@
 
 
   <div class="content">
-    <app-login style="width: 100%;" *ngIf="segment===login"></app-login>
-    <app-sing-up style="width: 100%;" *ngIf="segment===signUp"></app-sing-up>
+    <ion-slides class="fw" (ionSlideDidChange) = "slideDragged($event)" #slide>
+      <ion-slide class="">
+        <app-login class="fw"></app-login>
+      </ion-slide>
+      
+      <ion-slide class="fw">
+        <app-sing-up class="fw"></app-sing-up>
+      </ion-slide>
+    </ion-slides>
   </div>
 
 </div>

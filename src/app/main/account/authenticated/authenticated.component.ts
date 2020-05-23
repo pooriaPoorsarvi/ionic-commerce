@@ -16,4 +16,5 @@ export class AuthenticatedComponent implements OnInit {
     this.authenticationService.logout();
   }
 
+
 }
