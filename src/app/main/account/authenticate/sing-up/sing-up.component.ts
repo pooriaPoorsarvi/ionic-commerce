@@ -1,6 +1,9 @@
+import { AlertController } from '@ionic/angular';
+import { AuthenticationService } from './../../../shared/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, AbstractControl } from '@angular/forms';
 import { AuthenticationInfo } from 'src/app/main/shared/authentication.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -25,12 +28,25 @@ export class SingUpComponent implements OnInit {
     }
     return c.value !== this.signUpForm.value.password ? { repeatedPassword : false} : null;
   }
-  constructor() { }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private alertController: AlertController
+  ) { }
 
   ngOnInit() {}
 
   signUp() {
-    console.log(this.signUpForm.value as AuthenticationInfo);
+    this.authenticationService.singUpFromServer(this.signUpForm.value as AuthenticationInfo, this.presentAlert.bind(this));
+  }
+
+  async presentAlert(err: HttpErrorResponse) {
+    const alert = await this.alertController.create({
+      header: 'Sign up Error',
+      message: err.error.message,
+      buttons: ['OK']
+    });
+    this.signUpForm.reset();
+    await alert.present();
   }
 
 }

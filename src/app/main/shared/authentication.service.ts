@@ -66,6 +66,39 @@ export class AuthenticationService {
         await Promise.resolve(s.toPromise);
     }
 
+    private singUpFromServerWithSubject(authenticationInfo: AuthenticationInfo, onError?: (err) => void) {
+        const subs =  this.requestSenderService.makeRequest(
+            () => {
+                return this.httpClient.post(environment.apiUrl + '/users', authenticationInfo);
+            },
+            (res) => {},
+            (err) => {
+                console.log('Sign up failed.');
+                console.log(err);
+                if (typeof onError !== 'undefined') {
+                    onError(err);
+                }
+            },
+            500,
+            'Signing you up !',
+            AuthenticationService.name + this.singUpFromServer.name,
+            true,
+            0
+            ) as Subject<JWTResponse>;
+        subs.subscribe(
+            (jwt: JWTResponse) => {
+                this.authenticationModel.updateJWT(jwt.jwt);
+                this.saveJWT(jwt.jwt);
+            }
+        );
+        return subs;
+    }
+
+    public async singUpFromServer(authenticationInfo: AuthenticationInfo, onError?: (err) => void) {
+        const s = this.singUpFromServerWithSubject(authenticationInfo, onError);
+        await Promise.resolve(s.toPromise);
+    }
+
     // TODO check whether or not enc the jwt is a good idea
     private async saveJWT(jwt: string) {
         await Storage.set({
