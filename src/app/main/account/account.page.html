@@ -6,6 +6,6 @@
 </ion-header>
 
 <ion-content class="ion-no-padding" >
-  <app-authenticated *ngIf="authenticationService.getAuthenticationModel().isExpired()"></app-authenticated>
-  <app-authenticate *ngIf="!authenticationService.getAuthenticationModel().isExpired()"></app-authenticate>
+  <app-authenticated *ngIf="!authenticationService.getAuthenticationModel().isExpired()"></app-authenticated>
+  <app-authenticate *ngIf="authenticationService.getAuthenticationModel().isExpired()"></app-authenticate>
 </ion-content>

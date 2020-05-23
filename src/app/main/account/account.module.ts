@@ -4,7 +4,7 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
 import { AuthenticatedComponent } from './authenticated/authenticated.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -17,7 +17,8 @@ import { AccountPage } from './account.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AccountPageRoutingModule
+    AccountPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [AccountPage, AuthenticatedComponent, AuthenticateComponent, LoginComponent, SingUpComponent]
 })

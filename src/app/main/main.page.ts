@@ -10,12 +10,9 @@ import { Component, OnInit } from '@angular/core';
 export class MainPage implements OnInit {
 
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor() { }
 
   ngOnInit() {
-    if (this.authenticationService.getAuthenticationModel().isExpired) {
-      this.authenticationService.authenticateFromServer({email: 'p@gam.c', password: 'password'});
-    }
   }
 
 }

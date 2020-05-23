@@ -33,7 +33,7 @@ export class AuthenticationService {
     }
 
 
-    private authenticateFromServerWithSubject(authenticationInfo: AuthenticationInfo) {
+    private authenticateFromServerWithSubject(authenticationInfo: AuthenticationInfo, onError?: () => void) {
         const subs =  this.requestSenderService.makeRequest(
             () => {
                 return this.httpClient.post(environment.apiUrl + '/authenticate/', authenticationInfo);
@@ -42,10 +42,15 @@ export class AuthenticationService {
             (err) => {
                 console.log('Authenticating failed.');
                 console.log(err);
+                if (typeof onError !== 'undefined') {
+                    onError();
+                }
             },
             500,
             'Authenticating...',
             AuthenticationService.name + this.authenticateFromServer.name,
+            true,
+            0
             ) as Subject<JWTResponse>;
         subs.subscribe(
             (jwt: JWTResponse) => {
@@ -56,8 +61,8 @@ export class AuthenticationService {
         return subs;
     }
 
-    public async authenticateFromServer(authenticationInfo: AuthenticationInfo) {
-        const s = this.authenticateFromServerWithSubject(authenticationInfo);
+    public async authenticateFromServer(authenticationInfo: AuthenticationInfo, onError?: () => void) {
+        const s = this.authenticateFromServerWithSubject(authenticationInfo, onError);
         await Promise.resolve(s.toPromise);
     }
 
