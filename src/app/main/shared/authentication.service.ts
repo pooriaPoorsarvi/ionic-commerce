@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Plugins } from '@capacitor/core';
 import { Injectable } from '@angular/core';
 import { AuthenticationModel } from './authentication.model';
-import { resolve } from 'url';
+
 
 // TODO use v2.0.0 offline storage from ionic that uses NoSql
 const { Storage } = Plugins;
@@ -49,7 +49,7 @@ export class AuthenticationService {
             ) as Subject<JWTResponse>;
         subs.subscribe(
             (jwt: JWTResponse) => {
-                this.authenticationModel = new AuthenticationModel(jwt.jwt);
+                this.authenticationModel.updateJWT(jwt.jwt);
                 this.saveJWT(jwt.jwt);
             }
         );
@@ -61,7 +61,7 @@ export class AuthenticationService {
         await Promise.resolve(s.toPromise);
     }
 
-
+    // TODO check whether or not enc the jwt is a good idea
     private async saveJWT(jwt: string) {
         await Storage.set({
             key: this.saveKey,
@@ -71,16 +71,14 @@ export class AuthenticationService {
 
     private async loadJWT() {
         const jwtMap = await Storage.get({ key: this.saveKey });
-        const authenticationModel = new AuthenticationModel(jwtMap.value);
-        if (! authenticationModel.isExpired) {
-            this.authenticationModel = authenticationModel;
-        } else {
+        this.authenticationModel.updateJWT(jwtMap.value);
+        if (this.authenticationModel.isExpired) {
             Storage.clear();
         }
     }
 
-    public getAuthenticationModel(): AuthenticationModel{
-        return { ...this.authenticationModel } as AuthenticationModel;
+    public getAuthenticationModel(): AuthenticationModel {
+        return this.authenticationModel;
     }
 
 

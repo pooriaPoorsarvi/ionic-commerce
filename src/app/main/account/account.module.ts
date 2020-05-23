@@ -1,3 +1,5 @@
+import { AuthenticateComponent } from './authenticate/authenticate.component';
+import { AuthenticatedComponent } from './authenticated/authenticated.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +17,6 @@ import { AccountPage } from './account.page';
     IonicModule,
     AccountPageRoutingModule
   ],
-  declarations: [AccountPage]
+  declarations: [AccountPage, AuthenticatedComponent, AuthenticateComponent]
 })
 export class AccountPageModule {}

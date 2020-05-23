@@ -1,0 +1,17 @@
+.content{
+    flex-grow: 1;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+ion-grid{
+    width: 100%;
+}
+
+.seg-grid{
+    flex-grow: 0;
+}
+
+.seg-content-container{
+    display: flex; height: 100%; flex-flow: column;
+}

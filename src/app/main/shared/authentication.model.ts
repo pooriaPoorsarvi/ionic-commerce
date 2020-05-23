@@ -9,20 +9,24 @@ export class AuthenticationModel {
     private hasBeenExpired = false;
 
     constructor(private jwt?: string) {
-        if (this.jwt !== undefined) {
-            const tokenInfo = this.helper.decodeToken(this.jwt);
-            this.hasBeenExpired = this.helper.isTokenExpired(this.jwt);
-            this.email = tokenInfo.sub;
-        } else {
-            this.jwt = '';
-        }
+        this.updateJWT(jwt);
     }
 
-    getEmail(): string {
+    public updateJWT(jwt: string){
+        const tokenInfo = this.helper.decodeToken(jwt);
+        if (jwt === 'undefined' || jwt === null || tokenInfo === null || jwt === '') {
+            return;
+        }
+        this.jwt = jwt;
+        this.hasBeenExpired = this.helper.isTokenExpired(this.jwt);
+        this.email = tokenInfo.sub;
+    }
+
+    public getEmail(): string {
         return this.email;
     }
 
-    isExpired(): boolean {
+    public isExpired(): boolean {
         return this.hasBeenExpired;
     }
 
