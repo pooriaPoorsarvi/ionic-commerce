@@ -1,5 +1,7 @@
+import { IonSlides } from '@ionic/angular';
+import { SegmentChangeEventDetail } from '@ionic/core';
 import { AuthenticationService } from './../../shared/authentication.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-authenticated',
@@ -8,12 +10,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthenticatedComponent implements OnInit {
 
+// TODO if this make things slow, change the components into pages
+
+  @ViewChild(IonSlides, {static: true}) slide: IonSlides;
+
+  accountDetail = 'account-detail';
+  orders = 'orders';
+  options: string[] = [this.accountDetail, this.orders];
+
+  segment = this.options[0];
+
+
   constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit() {}
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  // TODO remove the repetition of the segment change in authetichated and authenticate componenets
+  segmentChange(event: CustomEvent<SegmentChangeEventDetail>) {
+    this.segment = event.detail.value;
+    this.slide.slideTo(this.options.indexOf(this.segment));
+  }
+
+  slideDragged(){
+    this.slide.getActiveIndex().then(
+      (index) => {
+        this.segment = this.options[index];
+      }
+    );
   }
 
 
