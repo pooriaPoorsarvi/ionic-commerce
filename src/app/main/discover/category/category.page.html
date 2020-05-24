@@ -26,7 +26,8 @@
 
           <ion-img [src] = "product.imageSrc"></ion-img>
           <ion-card-content  class="ion-margin-top ion-no-padding">
-            <p>{{product.description}}</p>
+            <!-- TODO remove the repetition for the card of products -->
+            <p class="ion-padding">{{product.description}}</p>
 
             <ion-button fill="clear"
               color="primary" 
