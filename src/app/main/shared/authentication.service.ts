@@ -26,9 +26,10 @@ interface JWTResponse {
 export class AuthenticationService {
 
     private saveKey = 'jwt';
-    private authenticationModel: AuthenticationModel = new AuthenticationModel();
+    private authenticationModel: AuthenticationModel;
 
     constructor(private httpClient: HttpClient, private requestSenderService: RequestSenderService) {
+        this.authenticationModel = new AuthenticationModel(this.httpClient);
         this.loadJWT();
     }
 
@@ -122,7 +123,6 @@ export class AuthenticationService {
     public logout(){
         Storage.clear();
         this.authenticationModel.updateJWT('');
-        console.log(this.authenticationModel.isExpired());
     }
 
 

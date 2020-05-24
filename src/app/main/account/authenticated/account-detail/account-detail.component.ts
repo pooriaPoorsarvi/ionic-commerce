@@ -13,7 +13,7 @@ export class AccountDetailComponent implements OnInit {
   userDetailForm  = new FormGroup({
     firstName: new FormControl('Pooria', [Validators.required]),
     lastName: new FormControl('Poorsarvi Tehrani', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl(this.authenticationService.getAuthenticationModel().getEmail(), [Validators.required, Validators.email]),
     address: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
   });
@@ -23,6 +23,7 @@ export class AccountDetailComponent implements OnInit {
   ngOnInit() {}
 
   logout() {
+    console.log(this.authenticationService.getAuthenticationModel().getEmail());
     this.authenticationService.logout();
   }
 
