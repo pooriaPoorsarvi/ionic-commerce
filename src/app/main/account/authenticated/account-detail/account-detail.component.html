@@ -1,4 +1,4 @@
-
+<form [formGroup] = "userDetailForm">
 <ion-grid>
 
   <ion-row>
@@ -11,45 +11,37 @@
 
   <ion-row>
     <ion-col class="ion-no-padding" size-md = "10" size-lg = "8"  offset-md="1" offset-lg="2" >
-      <ion-list class="ion-padding">
+      
+      
+        <ion-list class="ion-padding">
 
           <ion-item>
-            <ion-label>
-              <h2>Pooria</h2>
-              <p>First Name</p>
-            </ion-label>
+            <ion-label position="floating">First Name<ion-text color="danger">*</ion-text></ion-label>
+            <ion-input formControlName="firstName" type="text"></ion-input>
+          </ion-item>
+
+
+          <ion-item>
+            <ion-label position="floating">Last Name<ion-text color="danger">*</ion-text></ion-label>
+            <ion-input formControlName="lastName" type="text"></ion-input>
           </ion-item>
           
           <ion-item>
-            <ion-label>New Name</ion-label>
-            <ion-input></ion-input>
+            <ion-label position="floating">Email<ion-text color="danger">*</ion-text></ion-label>
+            <ion-input formControlName="email" type="text"></ion-input>
           </ion-item>
-      
+
           <ion-item>
-            <ion-label>
-              <h2>Poorsarvi Tehrani</h2>
-              <p>Last Name</p>
-            </ion-label>      
+            <ion-label position="floating">Address<ion-text color="danger">*</ion-text></ion-label>
+            <ion-input formControlName="address" type="text"></ion-input>
           </ion-item>
-      
+
           <ion-item>
-            <ion-label>New Last Name</ion-label>
-            <ion-input></ion-input>
+            <ion-label position="floating">Password<ion-text color="danger">*</ion-text></ion-label>
+            <ion-input formControlName="password" type="password"></ion-input>
           </ion-item>
-      
-      
-          <ion-item>
-            <ion-label>
-              <h2>Ontario Canada</h2>
-              <p>Address</p>
-            </ion-label>
-          </ion-item>
-      
-          <ion-item>
-            <ion-label>New Address</ion-label>
-            <ion-input></ion-input>
-          </ion-item>
-      
+
+          
         </ion-list>
         
     </ion-col>
@@ -73,3 +65,4 @@
   </ion-row>
 
 </ion-grid>
+</form>

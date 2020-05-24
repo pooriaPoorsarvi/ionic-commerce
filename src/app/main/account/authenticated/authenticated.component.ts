@@ -1,6 +1,5 @@
 import { IonSlides } from '@ionic/angular';
 import { SegmentChangeEventDetail } from '@ionic/core';
-import { AuthenticationService } from './../../shared/authentication.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
@@ -21,13 +20,11 @@ export class AuthenticatedComponent implements OnInit {
   segment = this.options[0];
 
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor() { }
 
   ngOnInit() {}
 
-  logout() {
-    this.authenticationService.logout();
-  }
+
 
   // TODO remove the repetition of the segment change in authetichated and authenticate componenets
   segmentChange(event: CustomEvent<SegmentChangeEventDetail>) {
