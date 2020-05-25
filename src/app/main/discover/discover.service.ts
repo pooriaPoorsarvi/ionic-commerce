@@ -15,7 +15,7 @@ export class DiscoverService {
   discover(): Subject<ProductInterface[]> {
     return this.requestSenderService.makeRequest(
       () => {
-        return this.httpClient.get(environment.apiUrl + '/products/discover');
+        return this.httpClient.get(environment.apiUrl + '/products/discover', {headers: {'Access-Control-Allow-Origin' : '*'}});
       },
       (res) => {},
       (err) => {

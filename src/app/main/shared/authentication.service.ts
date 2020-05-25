@@ -44,15 +44,16 @@ export class AuthenticationService {
 
     constructor(private httpClient: HttpClient, private requestSenderService: RequestSenderService) {
         this.authenticationModel = new AuthenticationModel();
-        this.loadJWT();
-        this.getUserInfo();
+        this.loadJWT().then(
+            _ => this.getUserInfo()
+        );
     }
 
 
     private authenticateFromServerWithSubject(authenticationInfo: AuthenticationInfo, onError?: () => void) {
         const subs =  this.requestSenderService.makeRequest(
             () => {
-                return this.httpClient.post(environment.apiUrl + '/authenticate/', authenticationInfo);
+                return this.httpClient.post(environment.apiUrl + '/authenticate/', authenticationInfo, {headers:{'Access-Control-Allow-Origin':'*'}});
             },
             (res) => {},
             (err) => {
@@ -88,7 +89,7 @@ export class AuthenticationService {
     private singUpFromServerWithSubject(authenticationInfo: AuthenticationInfo, onError?: (err) => void) {
         const subs =  this.requestSenderService.makeRequest(
             () => {
-                return this.httpClient.post(environment.apiUrl + '/users', authenticationInfo);
+                return this.httpClient.post(environment.apiUrl + '/users', authenticationInfo, {headers:{'Access-Control-Allow-Origin':'*'}});
             },
             (res) => {},
             (err) => {
@@ -123,6 +124,7 @@ export class AuthenticationService {
 
     // TODO check whether or not enc the jwt is a good idea
     private async saveJWT(jwt: string) {
+        sessionStorage.setItem(this.saveKey, jwt);
         await Storage.set({
             key: this.saveKey,
             value: jwt
@@ -130,10 +132,18 @@ export class AuthenticationService {
     }
 
     private async loadJWT() {
-        const jwtMap = await Storage.get({ key: this.saveKey });
-        this.authenticationModel.updateJWT(jwtMap.value);
-        if (this.authenticationModel.isExpired) {
-            Storage.clear();
+        const jwtMapStorage = await Storage.get({ key: this.saveKey });
+        if (jwtMapStorage !== null || typeof jwtMapStorage !== 'undefined') {
+            this.authenticationModel.updateJWT(jwtMapStorage.value);
+        }
+        if (this.authenticationModel.isExpired()) {
+            Storage.clear();    
+            const jwtMap = await sessionStorage.getItem(this.saveKey);
+            this.authenticationModel.updateJWT(jwtMap);
+            console.log(this.authenticationModel.isExpired());
+            if (this.authenticationModel.isExpired()) {
+                sessionStorage.clear();
+            }
         }
     }
 
@@ -141,8 +151,9 @@ export class AuthenticationService {
         return this.authenticationModel;
     }
 
-    public logout(){
-        Storage.clear();
+    public logout() {
+        // sessionStorage.clear();
+        // Storage.clear();
         this.authenticationModel.updateJWT('');
         this.authenticationModelStream.next(this.authenticationModel);
     }
@@ -153,7 +164,7 @@ export class AuthenticationService {
         const subs =  this.requestSenderService.makeRequest(
             () => {
                 return this.httpClient.put(environment.apiUrl + '/users', authenticationInfo, {
-                    headers: { 'Authorization' : 'Bearer ' + this.getAuthenticationModel().getJWT()}
+                    headers: { 'Authorization' : 'Bearer ' + this.getAuthenticationModel().getJWT(), 'Access-Control-Allow-Origin':'*'}
                 });
             },
             (res) => {},
@@ -182,14 +193,14 @@ export class AuthenticationService {
         return subs;
     }
 
-    private getUserInfo(onError?: (err) => void) {
+    public getUserInfo(onError?: (err) => void) {
         if (this.authenticationModel.isExpired()) {
             return null;
         }
         const subs =  this.requestSenderService.makeRequest(
             () => {
                 return this.httpClient.get(environment.apiUrl + '/users', {
-                    headers: { 'Authorization' : 'Bearer ' + this.getAuthenticationModel().getJWT()}
+                    headers: { 'Authorization' : 'Bearer ' + this.getAuthenticationModel().getJWT(), 'Access-Control-Allow-Origin': '*'}
                 });
             },
             (res) => {},

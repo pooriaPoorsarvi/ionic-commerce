@@ -22,7 +22,7 @@ export class ProductService {
   getProduct(ID: string): Subject<ProductInterface> {
     return this.requestSenderService.makeRequest(
       () => {
-        return this.httpClient.get(environment.apiUrl + '/products/' + ID);
+        return this.httpClient.get(environment.apiUrl + '/products/' + ID, {headers:{'Access-Control-Allow-Origin':'*'}});
       },
       (res) => {},
       (err) => {

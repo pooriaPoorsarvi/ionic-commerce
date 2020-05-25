@@ -72,8 +72,6 @@ export class AuthenticationModel {
     }
 
     public getPersonalInfo(): UserInfo {
-        console.log("shit shit shiiiiiit");
-        console.log(this.userInfo);
         return {...this.userInfo};
     }
 

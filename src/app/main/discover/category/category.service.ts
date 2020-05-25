@@ -22,7 +22,7 @@ export class CategoryService {
   getAllCategories(): Subject<CategoryInterface[]> {
     return this.requestSenderService.makeRequest(
       () => {
-        return this.httpClient.get(environment.apiUrl + '/categories');
+        return this.httpClient.get(environment.apiUrl + '/categories', {headers:{'Access-Control-Allow-Origin':'*'}});
       },
       (res) => {},
       (err) => {
@@ -40,7 +40,7 @@ export class CategoryService {
   getAllProductsForCategory(ID: string): Subject<ProductInterface[]> {
     return this.requestSenderService.makeRequest(
       () => {
-        return this.httpClient.get(environment.apiUrl + '/categories/' + ID + '/products');
+        return this.httpClient.get(environment.apiUrl + '/categories/' + ID + '/products', {headers:{'Access-Control-Allow-Origin':'*'}});
       },
       (res) => {},
       (err) => {
