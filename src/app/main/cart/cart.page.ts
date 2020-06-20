@@ -1,3 +1,4 @@
+import { CartService, CartProduct } from './../shared/cart.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,11 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cart.page.scss'],
 })
 export class CartPage implements OnInit {
-  items = [1, 2, 3, 4, 5];
 
-  constructor() { }
+  products: CartProduct[] = [];
+
+  constructor(
+    private cartService: CartService
+  ) { }
 
   ngOnInit() {
+    this.cartService.listenToProducts().subscribe(
+      (products: CartProduct[]) => {
+        this.products = products;
+      }
+    );
   }
 
 }

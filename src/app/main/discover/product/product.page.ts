@@ -1,3 +1,4 @@
+import { CartService } from './../../shared/cart.service';
 import { ProductService } from './product.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
@@ -14,7 +15,12 @@ export class ProductPage implements OnInit {
   id: string;
   product: ProductInterface;
 
-  constructor(private navCntrl: NavController, private activatedRoute: ActivatedRoute, public productService: ProductService) { }
+  constructor(
+    private navCntrl: NavController,
+    private activatedRoute: ActivatedRoute,
+    public productService: ProductService,
+    public cartService: CartService
+  ) { }
   goBack() {
     this.navCntrl.navigateBack(['/']);
   }
@@ -35,6 +41,10 @@ export class ProductPage implements OnInit {
         }
       }
     );
+  }
+
+  addToShoppingCart(): void {
+    this.cartService.addProduct(this.product);
   }
 
 
