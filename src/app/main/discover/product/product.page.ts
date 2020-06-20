@@ -15,6 +15,8 @@ export class ProductPage implements OnInit {
   id: string;
   product: ProductInterface;
 
+  numberOfProductsInCart = 0;
+
   constructor(
     private navCntrl: NavController,
     private activatedRoute: ActivatedRoute,
@@ -24,6 +26,8 @@ export class ProductPage implements OnInit {
   goBack() {
     this.navCntrl.navigateBack(['/']);
   }
+
+  // TODO make sure everything happens after you get the product so you don't get an error for unidentified version
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(
       (paramMap: ParamMap) => {
@@ -33,6 +37,7 @@ export class ProductPage implements OnInit {
             this.productService.getProduct(this.id).subscribe(
               (product: ProductInterface) => {
                 this.product = product;
+                this.checkNumberOfProductsInCart();
               }
             );
           }
@@ -43,8 +48,18 @@ export class ProductPage implements OnInit {
     );
   }
 
+
+  checkNumberOfProductsInCart() {
+    this.numberOfProductsInCart = this.cartService.getNumberOfProducts(this.product);
+    this.cartService.listenToProducts().subscribe ( _ => this.numberOfProductsInCart = this.cartService.getNumberOfProducts(this.product) );
+  }
+
   addToShoppingCart(): void {
     this.cartService.addProduct(this.product);
+  }
+
+  decreaseProductNumber(): void {
+    this.cartService.removeProduct(this.product);
   }
 
 

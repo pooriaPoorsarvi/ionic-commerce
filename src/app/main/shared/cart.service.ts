@@ -1,3 +1,4 @@
+import { SavingService } from './saving.service';
 import { Subject, Observable } from 'rxjs';
 import { ProductInterface, ProductService } from './../discover/product/product.service';
 import { Injectable } from '@angular/core';
@@ -16,8 +17,26 @@ export class CartService {
 
     private productsSubject: Subject<CartProduct[]> =  new Subject();
 
-    constructor() {
+    private readonly key  = 'cartProducts';
+
+    constructor(
+        private savingService: SavingService
+    ) {
         this.productsSubject.next(this.products.slice());
+
+        this.savingService.retrieveObject(this.key).then(
+            (result) => {
+                if (typeof result !== 'undefined' && result != null) {
+                    this.products = JSON.parse(result);
+                }
+            }
+        );
+
+        this.productsSubject.subscribe(
+            (products: CartProduct[]) => {
+                this.savingService.saveObject(this.key, JSON.stringify(products));
+            }
+        );
     }
 
 
@@ -43,6 +62,7 @@ export class CartService {
         } else {
             this.products[index].numberOfProduct += 1;
         }
+        this.productsSubject.next(this.products.slice());
     }
 
 
@@ -53,7 +73,7 @@ export class CartService {
         } else {
             this.products[index].numberOfProduct -= 1;
             if (this.products[index].numberOfProduct <= 0) {
-                this.products = this.products.splice(index, 1);
+                this.products.splice(index, 1);
             }
             this.productsSubject.next(this.products.slice());
         }
@@ -62,6 +82,18 @@ export class CartService {
 
     listenToProducts(): Observable<CartProduct[]> {
         return this.productsSubject.asObservable();
+    }
+
+    checkProductExistense(product: ProductInterface): boolean {
+        return this.findProductIndex(product) !== -1;
+    }
+
+    getNumberOfProducts(product: ProductInterface): number {
+        const index = this.findProductIndex(product);
+        if (index > -1){
+            return this.products[index].numberOfProduct;
+        }
+        return 0;
     }
 
 

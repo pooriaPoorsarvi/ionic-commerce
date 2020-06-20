@@ -15,6 +15,7 @@ export class CartPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.products = this.cartService.getCurrentInstance();
     this.cartService.listenToProducts().subscribe(
       (products: CartProduct[]) => {
         this.products = products;

@@ -1,6 +1,7 @@
+import { CartService } from './../../shared/cart.service';
 import { RequestSenderService } from './../../shared/request-sender.service';
 import { environment } from './../../../../environments/environment';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { timer, Subject } from 'rxjs';
 
@@ -16,7 +17,11 @@ export interface ProductInterface {
   providedIn: 'root'
 })
 export class ProductService {
-  constructor(private httpClient: HttpClient, private requestSenderService: RequestSenderService) { }
+  constructor(
+    private httpClient: HttpClient,
+    private requestSenderService: RequestSenderService,
+  ) { }
+
 
 
   getProduct(ID: string): Subject<ProductInterface> {

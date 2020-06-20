@@ -27,11 +27,20 @@
                 <h3>Price : {{product.price | currency}}</h3>
               </ion-text>
             </ion-col>
+            <ion-col class="ion-no-padding" size="12" *ngIf = "numberOfProductsInCart !==0">
+              <ion-list>
+                <ion-item>
+                  <ion-icon slot="start" name="cart-outline"></ion-icon>
+                  <ion-label># In  Cart:</ion-label>
+                  <ion-badge color="success" slot="end">{{numberOfProductsInCart}}</ion-badge>
+                </ion-item>
+              </ion-list>
+            </ion-col>
           </ion-row>
 
           <ion-row>
             <ion-col offset="3" size="2">
-              <ion-button [color]='"danger"'>
+              <ion-button [color]='"danger"' [disabled] = "numberOfProductsInCart === 0" (click)="decreaseProductNumber()" >
                 <ion-icon name="trash-outline"></ion-icon>
               </ion-button>
             </ion-col>

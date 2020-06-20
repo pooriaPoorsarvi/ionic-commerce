@@ -16,15 +16,15 @@
       <ion-col size-md="10" offset-md="1" size-xs="12">
 
         <ion-list>
-          <ion-item *ngFor ='let item of products' >
+          <ion-item *ngFor ='let product of products' >
             
             
             <ion-thumbnail slot="start" [routerLink] = "['/', 'main', 'tabs', 'discover', 'product']">
               <ion-img [src]="'https://worldstrides.com/wp-content/uploads/2015/07/iStock_000040849990_Large.jpg'"></ion-img>
             </ion-thumbnail>
             <ion-label>
-              <h1>Title</h1>
-              <p>somethign</p>
+              <h1>{{product.product.name}}</h1>
+              <p>{{product.numberOfProduct}}</p>
             </ion-label>
             <ion-buttons slot="end">
               <ion-button [color] = "'success'">
