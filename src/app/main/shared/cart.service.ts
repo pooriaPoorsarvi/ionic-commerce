@@ -11,7 +11,7 @@ export interface CartProduct {
 
 
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class CartService {
     private products: CartProduct[] = [];
 
@@ -28,6 +28,7 @@ export class CartService {
             (result) => {
                 if (typeof result !== 'undefined' && result != null) {
                     this.products = JSON.parse(result);
+                    this.productsSubject.next(this.products.slice());
                 }
             }
         );

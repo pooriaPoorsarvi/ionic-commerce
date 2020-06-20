@@ -20,18 +20,18 @@
             
             
             <ion-thumbnail slot="start" [routerLink] = "['/', 'main', 'tabs', 'discover', 'product']">
-              <ion-img [src]="'https://worldstrides.com/wp-content/uploads/2015/07/iStock_000040849990_Large.jpg'"></ion-img>
+              <ion-img [src]="product.product.imageSrc"></ion-img>
             </ion-thumbnail>
             <ion-label>
               <h1>{{product.product.name}}</h1>
               <p>{{product.numberOfProduct}}</p>
             </ion-label>
             <ion-buttons slot="end">
-              <ion-button [color] = "'success'">
-                <ion-icon name="add"></ion-icon>
-              </ion-button>
-              <ion-button [color] = "'danger'">
+              <ion-button [color] = "'danger'" (click)="removeProduct(product)">
                 <ion-icon name="remove-outline"></ion-icon>
+              </ion-button>
+              <ion-button [color] = "'success'" (click)="addProduct(product)" >
+                <ion-icon name="add"></ion-icon>
               </ion-button>
             </ion-buttons>
       

@@ -1,5 +1,6 @@
 import { CartService, CartProduct } from './../shared/cart.service';
 import { Component, OnInit } from '@angular/core';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-cart',
@@ -23,4 +24,13 @@ export class CartPage implements OnInit {
     );
   }
 
+  addProduct(product: CartProduct) {
+    this.cartService.addProduct(product.product);
+  }
+
+  removeProduct(product: CartProduct) {
+    this.cartService.removeProduct(product.product);
+  }
+
 }
+

@@ -152,8 +152,8 @@ export class AuthenticationService {
     }
 
     public logout() {
-        // sessionStorage.clear();
-        // Storage.clear();
+        sessionStorage.clear();
+        Storage.clear();
         this.authenticationModel.updateJWT('');
         this.authenticationModelStream.next(this.authenticationModel);
     }
