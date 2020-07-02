@@ -6,15 +6,15 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar></ion-searchbar>
+  <ion-searchbar (ionChange) = 'searchChanged($event)'></ion-searchbar>
   <ion-list>
-    <ion-item *ngFor ='let item of items' detail [routerLink] = "['/', 'main', 'tabs', 'discover', 'product']">
+    <ion-item *ngFor ='let item of items' detail [routerLink] = "['/', 'main', 'tabs', 'discover', 'product', item.id]">
       <ion-thumbnail slot="start">
-        <ion-img [src]="'https://worldstrides.com/wp-content/uploads/2015/07/iStock_000040849990_Large.jpg'"></ion-img>
+        <ion-img [src]="item.imageSrc"></ion-img>
       </ion-thumbnail>
       <ion-label>
-        <h1>Title</h1>
-        <p>somethign</p>
+        <h1>{{item.name}}</h1>
+        <p>{{item.price |currency}}</p>
       </ion-label>
     </ion-item>
   </ion-list>

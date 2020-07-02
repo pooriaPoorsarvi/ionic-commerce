@@ -1,6 +1,5 @@
 import { CartService, CartProduct } from './../shared/cart.service';
 import { Component, OnInit } from '@angular/core';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-cart',
@@ -11,6 +10,8 @@ export class CartPage implements OnInit {
 
   products: CartProduct[] = [];
 
+  price = 0;
+
   constructor(
     private cartService: CartService
   ) { }
@@ -20,8 +21,17 @@ export class CartPage implements OnInit {
     this.cartService.listenToProducts().subscribe(
       (products: CartProduct[]) => {
         this.products = products;
+        this.updatePrice();
       }
     );
+  }
+
+  updatePrice(): void {
+    let sum = 0;
+    for (const product of this.products) {
+      sum += product.product.price * product.numberOfProduct;
+    }
+    this.price = sum;
   }
 
   addProduct(product: CartProduct) {

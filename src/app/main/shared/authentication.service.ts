@@ -163,9 +163,7 @@ export class AuthenticationService {
                                      onSuccess?: (userInfo: UserInfo) => void) {
         const subs =  this.requestSenderService.makeRequest(
             () => {
-                return this.httpClient.put(environment.apiUrl + '/users', authenticationInfo, {
-                    headers: { 'Authorization' : 'Bearer ' + this.getAuthenticationModel().getJWT(), 'Access-Control-Allow-Origin':'*'}
-                });
+                return this.httpClient.put(environment.apiUrl + '/users', authenticationInfo);
             },
             (res) => {},
             (err) => {
@@ -199,9 +197,7 @@ export class AuthenticationService {
         }
         const subs =  this.requestSenderService.makeRequest(
             () => {
-                return this.httpClient.get(environment.apiUrl + '/users', {
-                    headers: { 'Authorization' : 'Bearer ' + this.getAuthenticationModel().getJWT(), 'Access-Control-Allow-Origin': '*'}
-                });
+                return this.httpClient.get(environment.apiUrl + '/users');
             },
             (res) => {},
             (err) => {
