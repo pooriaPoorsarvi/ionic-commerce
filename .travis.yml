@@ -27,5 +27,7 @@ deploy:
   access_key_id: $ACCESS_KEY_ID_AWS
   secret_access_key: $SECRET_ACCESS_KEY_AWS
   bucket : "commerce-front-end-travis"
-  #  The clean up is skipped so that the jar file would not be removed
+  #  The clean up is skipped so that the jar file would not b e removed
   skip_cleanup: true
+  local_dir: ./www/
+  acl: public_read
