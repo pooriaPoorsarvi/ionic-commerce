@@ -54,7 +54,7 @@
           <h3>{{price | currency}}</h3>
           </ion-label>
           <ion-buttons slot="end">
-            <ion-button fill="solid" [color] = "'success'">
+            <ion-button fill="solid" [color] = "'success'" (click) = "order()" >
               Check Out
             </ion-button>
           </ion-buttons>

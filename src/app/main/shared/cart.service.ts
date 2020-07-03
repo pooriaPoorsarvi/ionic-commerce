@@ -1,3 +1,6 @@
+import { environment } from './../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { RequestSenderService } from './request-sender.service';
 import { SavingService } from './saving.service';
 import { Subject, Observable } from 'rxjs';
 import { ProductInterface, ProductService } from './../discover/product/product.service';
@@ -20,7 +23,9 @@ export class CartService {
     private readonly key  = 'cartProducts';
 
     constructor(
-        private savingService: SavingService
+        private savingService: SavingService,
+        private requestSenderService: RequestSenderService,
+        private httpClient: HttpClient
     ) {
         this.productsSubject.next(this.products.slice());
 
@@ -91,11 +96,33 @@ export class CartService {
 
     getNumberOfProducts(product: ProductInterface): number {
         const index = this.findProductIndex(product);
-        if (index > -1){
+        if (index > -1) {
             return this.products[index].numberOfProduct;
         }
         return 0;
     }
 
+    async order() {
+        console.log(JSON.stringify(this.products));
+        // this.requestSenderService.makeRequest(
+        //     () => {
+        //         return this.httpClient.post(environment.apiUrl + '/order', this.products);
+        //     },
+        //     (res) => {
+
+        //         this.products = [];
+        //         this.productsSubject.next(this.products.slice());
+
+        //     },
+        //     (err) => {
+        //         console.log('Ordering failed.');
+        //         console.log(err);
+        //     },
+        //     500,
+        //     'Sending your order!',
+        //     CartService.name + this.order.name,
+        //     true,
+        // );
+    }
 
 }

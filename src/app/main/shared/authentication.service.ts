@@ -1,7 +1,7 @@
 import { Subject, Observable } from 'rxjs';
 import { RequestSenderService } from './request-sender.service';
 import { environment } from './../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 
 import { Plugins } from '@capacitor/core';
 import { Injectable } from '@angular/core';
@@ -53,7 +53,7 @@ export class AuthenticationService {
     private authenticateFromServerWithSubject(authenticationInfo: AuthenticationInfo, onError?: () => void) {
         const subs =  this.requestSenderService.makeRequest(
             () => {
-                return this.httpClient.post(environment.apiUrl + '/authenticate/', authenticationInfo, {headers:{'Access-Control-Allow-Origin':'*'}});
+                return this.httpClient.post(environment.apiUrl + '/authenticate/', authenticationInfo);
             },
             (res) => {},
             (err) => {
@@ -89,7 +89,7 @@ export class AuthenticationService {
     private singUpFromServerWithSubject(authenticationInfo: AuthenticationInfo, onError?: (err) => void) {
         const subs =  this.requestSenderService.makeRequest(
             () => {
-                return this.httpClient.post(environment.apiUrl + '/users', authenticationInfo, {headers:{'Access-Control-Allow-Origin':'*'}});
+                return this.httpClient.post(environment.apiUrl + '/users', authenticationInfo);
             },
             (res) => {},
             (err) => {

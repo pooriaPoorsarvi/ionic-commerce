@@ -16,11 +16,13 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
-            const headers = {'Access-Control-Allow-Origin': '*'};
-            if ( !this.authenticationService.getAuthenticationModel().isExpired() ) {
-                console.log('interceptor jwt : ', !this.authenticationService.getAuthenticationModel().isExpired());
-                headers['Authorization'] =  'Bearer ' + this.authenticationService.getAuthenticationModel().getJWT();
+            const headers = {'Access-Control-Allow-Origin': '*',
+                            'Authorization': 'Bearer ' + this.authenticationService.getAuthenticationModel().getJWT()};
+            if ( this.authenticationService.getAuthenticationModel().isExpired() ) {
+                delete headers['Authorization'];
             }
+            console.log('headers');
+            console.log(headers);
             req = req.clone({
                 setHeaders: headers
             });

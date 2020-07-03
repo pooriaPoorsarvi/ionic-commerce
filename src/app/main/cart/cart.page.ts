@@ -42,5 +42,10 @@ export class CartPage implements OnInit {
     this.cartService.removeProduct(product.product);
   }
 
+  order() {
+    // console.log('clicked');
+    this.cartService.order();
+  }
+
 }
 

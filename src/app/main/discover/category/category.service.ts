@@ -40,7 +40,7 @@ export class CategoryService {
   getAllProductsForCategory(ID: string): Subject<ProductInterface[]> {
     return this.requestSenderService.makeRequest(
       () => {
-        return this.httpClient.get(environment.apiUrl + '/categories/' + ID + '/products', {headers:{'Access-Control-Allow-Origin':'*'}});
+        return this.httpClient.get(environment.apiUrl + '/categories/' + ID + '/products');
       },
       (res) => {},
       (err) => {
