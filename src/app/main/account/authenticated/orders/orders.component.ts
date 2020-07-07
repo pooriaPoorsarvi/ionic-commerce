@@ -1,3 +1,4 @@
+import { OrdersService, OrderInterface } from './orders.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,9 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./orders.component.scss'],
 })
 export class OrdersComponent implements OnInit {
-  date = new Date();
-  constructor() { }
 
-  ngOnInit() {}
+  orders: OrderInterface[] = [];
+
+  date = new Date();
+
+  constructor(
+    private ordersService: OrdersService
+  ) { }
+
+  ngOnInit() {
+    this.ordersService.getObservable().subscribe(
+      (orders) => {
+        this.orders = orders;
+      }
+    );
+    this.ordersService.reloadOrders();
+  }
+
+  reloadOrders(): void {
+    this.ordersService.reloadOrders();
+  }
 
 }

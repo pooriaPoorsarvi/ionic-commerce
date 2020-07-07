@@ -1,9 +1,10 @@
-import { environment } from './../../../environments/environment';
+import { AlertController } from '@ionic/angular';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { RequestSenderService } from './request-sender.service';
-import { SavingService } from './saving.service';
+import { RequestSenderService } from '../shared/request-sender.service';
+import { SavingService } from '../shared/saving.service';
 import { Subject, Observable } from 'rxjs';
-import { ProductInterface, ProductService } from './../discover/product/product.service';
+import { ProductInterface, ProductService } from '../discover/product/product.service';
 import { Injectable } from '@angular/core';
 
 
@@ -14,7 +15,7 @@ export interface CartProduct {
 
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CartService {
     private products: CartProduct[] = [];
 
@@ -25,13 +26,14 @@ export class CartService {
     constructor(
         private savingService: SavingService,
         private requestSenderService: RequestSenderService,
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        private alertController: AlertController
     ) {
         this.productsSubject.next(this.products.slice());
 
         this.savingService.retrieveObject(this.key).then(
             (result) => {
-                if (typeof result !== 'undefined' && result != null) {
+                if (typeof result !== 'undefined' && result !== null) {
                     this.products = JSON.parse(result);
                     this.productsSubject.next(this.products.slice());
                 }
@@ -103,26 +105,36 @@ export class CartService {
     }
 
     async order() {
-        console.log(JSON.stringify(this.products));
-        // this.requestSenderService.makeRequest(
-        //     () => {
-        //         return this.httpClient.post(environment.apiUrl + '/order', this.products);
-        //     },
-        //     (res) => {
+        if (this.products.length === 0) {
+            throw new Error('The product size is not enough to make an order');
+        }
+        this.requestSenderService.makeRequest(
+            () => {
+                return this.httpClient.post(environment.apiUrl + '/orders', this.products);
+            },
+            (res) => {
 
-        //         this.products = [];
-        //         this.productsSubject.next(this.products.slice());
+                this.products = [];
+                this.productsSubject.next(this.products.slice());
 
-        //     },
-        //     (err) => {
-        //         console.log('Ordering failed.');
-        //         console.log(err);
-        //     },
-        //     500,
-        //     'Sending your order!',
-        //     CartService.name + this.order.name,
-        //     true,
-        // );
+            },
+            (err) => {
+                console.log('Ordering failed.');
+                console.log(err);
+                const alert = this.alertController.create({
+                header: 'Order Error',
+                message: 'Sorry there was an error, please contact us at your earliest convinience',
+                buttons: ['OK']
+                }).then(
+                    (res) => res.present()
+                );
+            },
+            500,
+            'Sending your order!',
+            CartService.name + this.order.name,
+            true,
+            0
+        );
     }
 
 }

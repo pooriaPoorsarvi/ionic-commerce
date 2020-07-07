@@ -1,4 +1,3 @@
-import { CartService } from './../../shared/cart.service';
 import { RequestSenderService } from './../../shared/request-sender.service';
 import { environment } from './../../../../environments/environment';
 import { Injectable, OnInit } from '@angular/core';

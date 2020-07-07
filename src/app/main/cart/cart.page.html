@@ -54,8 +54,14 @@
           <h3>{{price | currency}}</h3>
           </ion-label>
           <ion-buttons slot="end">
-            <ion-button fill="solid" [color] = "'success'" (click) = "order()" >
+            <ion-button fill="solid" [color] = "'success'" (click) = "order()" *ngIf = 'authenticated()'
+            [disabled] = "products.length === 0">
               Check Out
+            </ion-button>
+            <ion-button fill="solid" [color] = "'danger'" 
+            [routerLink] = '["/", "main", "tabs", "account"]' 
+            *ngIf = '!authenticated()' >
+              Login To Check Out
             </ion-button>
           </ion-buttons>
         </ion-item>

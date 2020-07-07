@@ -1,4 +1,4 @@
-import { CartService } from './main/shared/cart.service';
+import { CartService } from './main/cart/cart.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { jwtInterceptorProvider } from './main/shared/jwt.interceptor';
+import { jwtInterceptorProvider } from './jwt.interceptor';
 
 
 @NgModule({

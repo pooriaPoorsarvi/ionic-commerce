@@ -1,4 +1,4 @@
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './main/shared/authentication.service';
 import { Injectable } from '@angular/core';
 import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
@@ -6,7 +6,7 @@ import {
 
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class JwtInterceptor implements HttpInterceptor {
 
     constructor(
@@ -21,11 +21,14 @@ export class JwtInterceptor implements HttpInterceptor {
             if ( this.authenticationService.getAuthenticationModel().isExpired() ) {
                 delete headers['Authorization'];
             }
-            console.log('headers');
-            console.log(headers);
             req = req.clone({
                 setHeaders: headers
             });
+            // TODO clear out commments
+            // console.log('headers');
+            // console.log(headers);
+            // console.log(req.headers);
+            // console.log(req.url);
             return next.handle(req);
     }
 }

@@ -12,18 +12,18 @@
 
 
 
-        <ion-item>
+        <ion-item *ngFor = "let order of orders">
           <ion-label color='secondary'>
             <h1>
-              Bought 26 items
+              Bought {{order.numberOfProductPurchase}} items
             </h1>
             <p>
-            {{date | date}}
+            {{order.purchaseDate | date}}
             </p>
           </ion-label>
           <ion-note slot="end" color='success'>
             <h3>
-              {{12 | currency}}
+              {{order.amountPayed | currency}}
             </h3>
           </ion-note>
         </ion-item>
@@ -39,6 +39,18 @@
 
     </ion-col>
 
+
+  </ion-row>
+
+
+
+  <ion-row>
+
+    <ion-col size-lg='6' offset-lg='3' size-md = '8' offset-md = '2' size='10' offset='1' class="ion-margin-top">
+      <ion-button class = "fw" color = "success" (click)="reloadOrders()" >
+        Reload the orders
+      </ion-button>
+    </ion-col>
 
   </ion-row>
 

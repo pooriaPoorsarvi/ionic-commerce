@@ -1,4 +1,5 @@
-import { CartService, CartProduct } from './../shared/cart.service';
+import { AuthenticationService } from './../shared/authentication.service';
+import { CartService, CartProduct } from './cart.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -13,7 +14,8 @@ export class CartPage implements OnInit {
   price = 0;
 
   constructor(
-    private cartService: CartService
+    private cartService: CartService,
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -43,8 +45,12 @@ export class CartPage implements OnInit {
   }
 
   order() {
-    // console.log('clicked');
     this.cartService.order();
+  }
+
+
+  authenticated(): boolean {
+    return ! this.authenticationService.getAuthenticationModel().isExpired();
   }
 
 }
