@@ -10,7 +10,7 @@
   <ion-list>
     <ion-item *ngFor ='let item of items' detail [routerLink] = "['/', 'main', 'tabs', 'discover', 'product', item.id]">
       <ion-thumbnail slot="start">
-        <ion-img [src]="item.imageSrc"></ion-img>
+        <ion-img [src]="item.imgSrc"></ion-img>
       </ion-thumbnail>
       <ion-label>
         <h1>{{item.name}}</h1>

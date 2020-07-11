@@ -80,6 +80,9 @@ export class AuthenticationService {
     }
 
     public async authenticateFromServer(authenticationInfo: AuthenticationInfo, onError?: () => void) {
+        if ( ! this.authenticationModel.isExpired() ) {
+            return;
+        }
         const s = this.authenticateFromServerWithSubject(authenticationInfo, onError);
         await Promise.resolve(s.toPromise);
         await this.getUserInfo();

@@ -7,7 +7,7 @@ import { timer, Subject } from 'rxjs';
 export interface ProductInterface {
   description: string;
   id: number;
-  imageSrc: string;
+  imgSrc: string;
   name: string;
   price: number;
 }
@@ -26,7 +26,7 @@ export class ProductService {
   getProduct(ID: string): Subject<ProductInterface> {
     return this.requestSenderService.makeRequest(
       () => {
-        return this.httpClient.get(environment.apiUrl + '/products/' + ID, {headers:{'Access-Control-Allow-Origin':'*'}});
+        return this.httpClient.get(environment.apiUrl + '/products/' + ID, {headers:{'Access-Control-Allow-Origin' : '*'}});
       },
       (res) => {},
       (err) => {
