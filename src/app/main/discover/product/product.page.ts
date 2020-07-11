@@ -37,7 +37,7 @@ export class ProductPage implements OnInit {
             this.productService.getProduct(this.id).subscribe(
               (product: ProductInterface) => {
                 this.product = product;
-                console.log(this.product.imgSrc);
+                console.log(this.product);
                 this.checkNumberOfProductsInCart();
               }
             );
