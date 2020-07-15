@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit {
     this.authenticationService.authenticateFromServer(this.loginForm.value, this.presentAlert.bind(this));
   }
 
+  // TODO remove all the subscriptions every where in the code
+  // TODO make sure that if the server is down they only get one message not multiple
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Authentication Error',
